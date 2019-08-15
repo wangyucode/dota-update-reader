@@ -37,3 +37,10 @@ data class DotaItem(
     val mc: String? = null,
     val cd: Int? = null
 )
+
+
+data class ItemAttr(
+    val key: String = "",
+    var attr: String = "",
+    var attrKey: String = ""
+)

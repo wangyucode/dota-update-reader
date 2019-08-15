@@ -6,15 +6,45 @@ class CurrentData(private val connection: Connection) {
 
     var heroDetailList = ArrayList<HeroDetail>()
     var itemList = ArrayList<DotaItem>()
+    var itemAttrList = ArrayList<ItemAttr>()
 
     fun initData() {
         initHeroDetail()
         initItem()
+        initItemAttr()
     }
 
     private fun initItem() {
-//        val itemStatement = connection.prepareStatement("SELECT * FROM DOTA_ITEM ")
-//        val resultSet = itemStatement.executeQuery()
+        val itemStatement = connection.prepareStatement("SELECT * FROM DOTA_ITEM ")
+        val resultSet = itemStatement.executeQuery()
+        while (resultSet.next()) {
+            val key = resultSet.getString("key")
+            val cd = resultSet.getInt("cd")
+            val cname = resultSet.getString("cname")
+            val cost = resultSet.getInt("cost")
+            val img = resultSet.getString("img")
+            val lore = resultSet.getString("lore")
+            val mc = resultSet.getString("mc")
+            val name = resultSet.getString("name")
+            val notes = resultSet.getString("notes")
+            val type = resultSet.getString("type")
+
+            val item = DotaItem(key, type, cname, name, lore, img, notes, cost, mc, cd)
+            itemList.add(item)
+        }
+    }
+
+    private fun initItemAttr() {
+        val attrStatement = connection.prepareStatement("SELECT * FROM DOTA_ITEM_ATTRS ")
+        val resultSet = attrStatement.executeQuery()
+        while (resultSet.next()) {
+            val key = resultSet.getString("dota_item_key")
+            val attr = resultSet.getString("attrs")
+            val attrKey = resultSet.getString("attrs_key")
+
+            val item = ItemAttr(key, attr, attrKey)
+            itemAttrList.add(item)
+        }
     }
 
     private fun initHeroDetail() {
