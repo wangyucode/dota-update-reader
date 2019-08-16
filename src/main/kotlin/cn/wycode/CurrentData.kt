@@ -7,11 +7,47 @@ class CurrentData(private val connection: Connection) {
     var heroDetailList = ArrayList<HeroDetail>()
     var itemList = ArrayList<DotaItem>()
     var itemAttrList = ArrayList<ItemAttr>()
+    var itemDescList = ArrayList<ItemDesc>()
+    var abilityList = ArrayList<Ability>()
 
     fun initData() {
         initHeroDetail()
         initItem()
         initItemAttr()
+        initItemDesc()
+        initAbility()
+    }
+
+    private fun initAbility() {
+        val attrStatement = connection.prepareStatement("SELECT * FROM HERO_ABILITY  ")
+        val resultSet = attrStatement.executeQuery()
+        while (resultSet.next()) {
+            val name = resultSet.getString("name")
+            val annotation = resultSet.getString("annotation")
+            val coolDown = resultSet.getString("cool_down")
+            val description = resultSet.getString("description")
+            val heroName = resultSet.getString("hero_name")
+            val imageUrl = resultSet.getString("image_url")
+            val magicConsumption = resultSet.getString("magic_consumption")
+            val tips = resultSet.getString("tips")
+            val num = resultSet.getInt("num")
+
+            val ability = Ability(name, annotation, coolDown, description, heroName, imageUrl, magicConsumption, tips, num)
+            abilityList.add(ability)
+        }
+    }
+
+    private fun initItemDesc() {
+        val attrStatement = connection.prepareStatement("SELECT * FROM DOTA_ITEM_DESC ")
+        val resultSet = attrStatement.executeQuery()
+        while (resultSet.next()) {
+            val key = resultSet.getString("dota_item_key")
+            val desc = resultSet.getString("desc")
+            val descKey = resultSet.getString("desc_key")
+
+            val item = ItemDesc(key, desc, descKey)
+            itemDescList.add(item)
+        }
     }
 
     private fun initItem() {

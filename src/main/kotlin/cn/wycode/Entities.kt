@@ -33,13 +33,38 @@ data class DotaItem(
     val lore: String? = null,
     var img: String = "",
     val notes: String? = null,
-    var cost: Int? = null,
+    var cost: Int = 0,
     val mc: String? = null,
     val cd: Int? = null
 )
 
 
 data class ItemAttr(
+    val key: String = "",
+    var attr: String = "",
+    var attrKey: String = ""
+)
+
+data class ItemDesc(
+    val key: String = "",
+    var desc: String = "",
+    var descKey: String = ""
+)
+
+
+data class Ability(
+    val name: String = "",
+    var annotation: String? = "",
+    var coolDown: String = "",
+    var description: String = "",
+    var heroName: String = "",
+    var imageUrl: String = "",
+    var magicConsumption: String = "",
+    var tips: String = "",
+    var num: Int = 1
+)
+
+data class AbilityAttr(
     val key: String = "",
     var attr: String = "",
     var attrKey: String = ""
